@@ -1,0 +1,87 @@
+@import '../../mixins.scss';
+
+#ldxpq13x {
+  position: relative;
+
+  .page-body {
+    position: relative;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+
+    &:empty {
+      justify-content: center;
+      &::after {
+        margin: 20px 0;
+        content: attr(empty-message);
+        opacity: 0.5;
+        font-size: 1.2rem;
+      }
+    }
+
+    .row {
+      width: 50%;
+    }
+
+    .img {
+      position: absolute;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      // &::after,
+      // &::before {
+      //   position: absolute;
+      //   top: 0;
+      //   background-color: black;
+      //   color: white;
+      //   padding: 2.5px 5px;
+      // }
+
+      // &::after {
+      //   left: 0;
+      //   content: attr(page);
+      // }
+      // &::before {
+      //   right: 0;
+      //   content: attr(count);
+      // }
+
+      .bottom-bar {
+        position: absolute;
+        bottom: 0;
+        @include flex-row;
+        justify-content: space-between;
+        width: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8),
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.1),
+          rgba(0, 0, 0, 0)
+        );
+        height: 60px;
+        padding: 20px 10px 0 10px;
+        box-sizing: border-box;
+
+        a {
+          color: rgb(146, 184, 221);
+          text-decoration: none;
+        }
+
+        .icon-favorite {
+          transition: all 100ms ease;
+
+          &.fill-red {
+            color: orangered;
+          }
+
+          &.pop {
+            animation: pop 100ms ease 1;
+          }
+        }
+      }
+    }
+  }
+}

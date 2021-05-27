@@ -1,0 +1,46 @@
+@import '../../mixins.scss';
+
+#l0fztroz {
+  position: relative;
+
+  .options {
+    margin-bottom: 20px;
+    .option {
+      @include flex-row;
+      justify-content: flex-start;
+      border-bottom: solid 1px #666;
+      padding: 5px 0 5px 10px;
+
+      * {
+        pointer-events: none;
+      }
+
+      .title {
+        .text {
+          font-size: 1.2rem;
+        }
+
+        small {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .notice {
+    padding: 0 10px;
+    margin-bottom: 20px;
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  footer {
+    color: #ccc;
+    .line {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  }
+}

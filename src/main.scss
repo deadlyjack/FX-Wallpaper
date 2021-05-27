@@ -1,0 +1,167 @@
+@import './mixins.scss';
+@import './theme.scss';
+@import './keyframes.scss';
+
+html,
+body {
+  viewport-fit: cover;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  @include bgcolor;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 16px;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  @include flex-center;
+  background-color: transparent;
+  height: 40px;
+  width: 40px;
+  border: none;
+  color: inherit;
+  font-size: 1.5rem;
+}
+
+#app {
+  &[platform='android'] {
+    @include statusbar;
+
+    .page {
+      @include statusbar;
+    }
+  }
+
+  &.not-ready {
+    &::after {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #212028;
+      background-color: var(--primary-color);
+      content: 'by';
+      color: #ccc;
+      height: 100vh;
+      width: 100vw;
+      background-image: url(./res/logo.png), url(./res/foxdebug.png);
+      background-position: center, bottom 20px center;
+      background-size: 150px, 100px;
+      background-repeat: no-repeat, no-repeat;
+      text-align: center;
+      box-sizing: border-box;
+      padding-top: 188%;
+
+      animation: show-text 300ms ease 1;
+
+      @keyframes show-text {
+        from {
+          color: transparent;
+        }
+        to {
+          color: #ccc;
+        }
+      }
+    }
+  }
+
+  &.ready {
+    &::after {
+      transform: scale(2);
+      opacity: 0;
+      animation: hide-loading 1s ease 1;
+      @keyframes hide-loading {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+        from {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  position: fixed;
+  height: 100%;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &[action] {
+    transition: all 100ms ease;
+
+    &:active {
+      transform: scale(0.92);
+    }
+  }
+}
+
+.grid {
+  @include flex-row;
+  flex-wrap: wrap;
+}
+
+.link,
+a {
+  text-decoration: underline;
+  color: #39f;
+  color: var(--anchor-color);
+}
+
+@mixin abs-center {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+.progress-loader {
+  @include abs-center;
+  z-index: 1;
+}
+
+.progress-message,
+.progress-meter {
+  @include abs-center;
+  font-size: 1.2rem;
+  @include flex-center;
+  text-shadow: 0 0 #000;
+  z-index: 1;
+}
+
+.progress-message {
+  width: 100%;
+  text-align: center;
+  height: 1rem;
+  z-index: 1;
+}
+
+.scrollable {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.333);
+    background: var(--scrollbar-color);
+    border-radius: 2px;
+  }
+}

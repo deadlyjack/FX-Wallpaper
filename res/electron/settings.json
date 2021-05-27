@@ -1,0 +1,9 @@
+{
+  "browserWindow": {
+    "darkTheme": true,
+    "webPreferences":{
+      "devTools": false,
+      "nodeIntegration": true
+    }
+  }
+}

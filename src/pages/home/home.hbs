@@ -1,0 +1,28 @@
+<div class="collections">
+  {{#collections}}
+  <div
+  class='collection'
+  {{#hidden}}hidden{{/hidden}}
+  {{#query}}query='.'{{/query}}
+  title='{{title}}'
+  action='{{type}}'
+  image-src='{{src}}'
+  collection-name='{{title}}'
+    style="{{#src}}background-image: url({{src}});{{/src}}
+    height: {{height}}px;
+    width: {{width}}px;"
+  >
+    <div class='bottom'>
+      <span class='title'>{{title}}</span>
+      <p class='description'>{{description}}</p>
+    </div>
+  </div>
+{{/collections}}
+</div>
+
+<h2>Explore wallpapers</h2>
+<div class="tags scrollable">
+  {{#tags}}
+  <span class="tag" action='open-tag'>{{.}}</span>
+  {{/tags}}
+</div>

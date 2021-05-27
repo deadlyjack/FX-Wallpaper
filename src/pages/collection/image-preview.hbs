@@ -1,0 +1,31 @@
+<div
+  class='img'
+  action='set-wallpaper'
+  style='background-color: {{avgColor}}; 
+  background-image: url({{src.thumbnail}});
+  height: {{relative_height}}px;
+  width: {{relative_width}}px;
+  top: {{top}}px;
+  {{#left}}left: {{.}}px;{{/left}}
+  {{#right}}right: {{.}}px;{{/right}}'
+  count='{{count}}'
+  page='{{page}}'
+  favorite='{{favorite}}'
+  image-id='{{id}}'
+  avg-color='{{avgColor}}'
+  author='{{meta.author}}'
+  website='{{meta.website}}'
+  email='{{meta.email}}'
+  url-thumbnail='{{src.thumbnail}}'
+  url-original='{{src.original}}'
+  image-height='{{height}}',
+  image-width='{{width}}'
+>
+  <div class='bottom-bar'>
+    <div>
+      {{#meta.author}}<small>by</small>&nbsp;{{/meta.author}}
+      <span action='open-link' data-href='{{#meta.website}}{{.}}{{/meta.website}}'>{{#meta.author}}{{.}}{{/meta.author}}</span>
+    </div>
+    <span class='icon-favorite{{#favorite}} fill-red{{/favorite}}' action='favorite' image-id='{{id}}'></span>
+  </div>
+</div>

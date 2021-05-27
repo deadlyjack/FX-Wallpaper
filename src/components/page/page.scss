@@ -1,0 +1,49 @@
+@import '../../mixins.scss';
+
+.page {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  @include bgcolor;
+
+  &[platform='android'] {
+    @include statusbar;
+  }
+
+  &.secondary {
+    animation: page-transition 100ms ease 1;
+
+    &.hide {
+      transform: translate3d(0, 100%, 0);
+      opacity: 0;
+      animation: page-transition-reverse 100ms ease 1;
+    }
+  }
+
+  header:not(:empty) {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    @include flex-row;
+    justify-content: flex-start;
+    height: 60px;
+    font-size: 1.6rem;
+    z-index: 2;
+    background-color: #212028;
+    background-color: var(--primary-color);
+
+    .icon {
+      @include icon(60px, 60px, 1.8rem);
+    }
+  }
+
+  .page-body {
+    width: 100%;
+    height: calc(100% - 60px);
+    z-index: 1;
+  }
+}

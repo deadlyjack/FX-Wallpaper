@@ -1,0 +1,137 @@
+@keyframes dialog-transition-top {
+  from {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-transition-top-reverse {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-transition-bottom {
+  from {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-transition-bottom-reverse {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-transition-center {
+  from {
+    transform: scale3d(0.5, 0.5, 1);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(1, 1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-transition-center-reverse {
+  from {
+    transform: translate3d(1, 1, 1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale3d(0.5, 0.5, 1);
+    opacity: 0;
+  }
+}
+
+@keyframes page-transition {
+  from {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes page-transition-reverse {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes mask-transition {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
+
+@keyframes mask-transition-reverse {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes appear-from-bottom {
+  from {
+    transform: translate3d(0, 120%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

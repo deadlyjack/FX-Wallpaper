@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.foxdebug.wallpaper" android-versionCode="1" version="1.0.1"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Wallpaper FXDBG</name>
+    <description>
+        Wallpaper app for android.
+    </description>
+    <author email="ajit@foxdebug.com" href="https://foxdebug.com">
+        Foxdebug
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+
+    <platform name="android">
+        <resource-file src="res/icon/android/mipmap-hdpi/ic_launcher_foreground.png" target="app/src/main/res/drawable/logo.png" />
+        <resource-file src="res/icon/android/values/ic_launcher_background.xml" target="/app/src/main/res/values/colors.xml" />
+        <resource-file src="/res/network_security_config.xml" target="/app/src/main/res/xml/network_security_config.xml" />
+
+        <allow-intent href="market:*" />
+        <preference name="fullscreen" value="false"/>
+        <preference name="SplashScreen" value="none"/>
+        <preference name="ShowTitle" value="false"/>
+        <preference name="DisallowOverscroll" value="true" />
+        <preference name="BackgroundColor" value="0xFF313131" />
+        <preference name="android-minSdkVersion" value="22" />
+        <preference name="android-targetSdkVersion" value="30" />
+        <preference name="prerendered-icon" value="false" />
+        <preference name="orientation" value="portrait" />
+        <preference name="AndroidXEnabled" value="true" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:networkSecurityConfig="@xml/network_security_config" />
+        </edit-config>
+
+        <icon background="@color/ic_launcher_background" density="mdpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />
+        <icon background="@color/ic_launcher_background" density="hdpi" foreground="res/icon/android/mipmap-hdpi/ic_launcher_foreground.png" />
+        <icon background="@color/ic_launcher_background" density="xhdpi" foreground="res/icon/android/mipmap-xhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/ic_launcher_background" density="xxhdpi" foreground="res/icon/android/mipmap-xxhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/ic_launcher_background" density="xxxhdpi" foreground="res/icon/android/mipmap-xxxhdpi/ic_launcher_foreground.png" />
+
+        <hook type="after_prepare" src="hooks/post-process.js" />
+    </platform>
+
+    <platform name="electron">
+        <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
+        <!-- <icon src="res/logo.png" target="app" /> -->
+        <hook type="after_perpare" src="hooks/electron-hook.js" />
+    </platform>
+
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+</widget>
