@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-wallpaper" version="0.0.1">
+  <name>cordova-plugin-wallpaper</name>
+  <description>Wallpaper service for android, maybe be for IOS later.</description>
+  <license>Apache 2.0</license>
+  <keywords>cordova,plugin,wallpaper</keywords>
+
+  <js-module src="www/wallpaper.js" name="wallpaper">
+    <clobbers target="window.wallpaper" />
+  </js-module>
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Wallpaper">
+        <param name="android-package" value="com.foxdebug.Wallpaper"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.SET_WALLPAPER" />
+      <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
+    </config-file>
+
+    <source-file src="src/android/Wallpaper.java" target-dir="src/com/foxdebug/wallpaper"/>
+  </platform>
+</plugin>

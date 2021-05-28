@@ -85,17 +85,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 
 /***/ }),
 
-/***/ "./secrets.json":
-/*!**********************!*\
-  !*** ./secrets.json ***!
-  \**********************/
-/***/ (function(module) {
-
-"use strict";
-eval("module.exports = JSON.parse('{\"apiUrl\":\"https://wallpaper.foxdebug.com/\"}');\n\n//# sourceURL=webpack://wallpaper/./secrets.json?");
-
-/***/ }),
-
 /***/ "./src/components/page/page.js":
 /*!*************************************!*\
   !*** ./src/components/page/page.js ***!
@@ -114,7 +103,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* binding */ Api; }\n/* harmony export */ });\n/* harmony import */ var _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @deadlyjack/ajax */ \"./node_modules/@deadlyjack/ajax/dist/ajax.js\");\n/* harmony import */ var _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _secrets_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../secrets.json */ \"./secrets.json\");\n\n\n\nfunction Api(pageSize = 10) {\n  function requestObj(url) {\n    return {\n      url: `${_secrets_json__WEBPACK_IMPORTED_MODULE_1__.apiUrl}${url}`,\n    };\n  }\n\n  return {\n    async all(page) {\n      const request = requestObj(`images/all?page=${page}&count=${pageSize}`);\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    async collections() {\n      const request = requestObj('collections');\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    /**\n     *\n     * @param {String} id ID of the collection\n     * @param {Number} page Page number\n     */\n    async collection(id, page = 1) {\n      const request = requestObj(`collection/${id}?search=on&page=${page}&count=${pageSize}`);\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    /**\n     * @returns {Number}\n     */\n    get PER_PAGE() {\n      return pageSize;\n    },\n  };\n}\n\n\n//# sourceURL=webpack://wallpaper/./src/lib/api.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* binding */ Api; }\n/* harmony export */ });\n/* harmony import */ var _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @deadlyjack/ajax */ \"./node_modules/@deadlyjack/ajax/dist/ajax.js\");\n/* harmony import */ var _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0__);\n\n\nfunction Api(pageSize = 10) {\n  function requestObj(url) {\n    return {\n      url: `https://wallpaper.foxdebug.com/${url}`,\n    };\n  }\n\n  return {\n    async all(page) {\n      const request = requestObj(`images/all?page=${page}&count=${pageSize}`);\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    async collections() {\n      const request = requestObj('collections');\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    /**\n     *\n     * @param {String} id ID of the collection\n     * @param {Number} page Page number\n     */\n    async collection(id, page = 1) {\n      const request = requestObj(`collection/${id}?search=on&page=${page}&count=${pageSize}`);\n      const response = await _deadlyjack_ajax__WEBPACK_IMPORTED_MODULE_0___default()(request);\n      return response;\n    },\n    /**\n     * @returns {Number}\n     */\n    get PER_PAGE() {\n      return pageSize;\n    },\n  };\n}\n\n\n//# sourceURL=webpack://wallpaper/./src/lib/api.js?");
 
 /***/ }),
 

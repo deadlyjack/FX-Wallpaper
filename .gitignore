@@ -1,6 +1,5 @@
 node_modules
 .env
-platforms
-secrets.json
-build.json
-plugins
+/platforms
+/build.json
+/plugins

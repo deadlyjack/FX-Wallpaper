@@ -1,10 +1,9 @@
 import ajax from '@deadlyjack/ajax';
-import secrets from '../../secrets.json';
 
 export default function Api(pageSize = 10) {
   function requestObj(url) {
     return {
-      url: `${secrets.apiUrl}${url}`,
+      url: `https://wallpaper.foxdebug.com/${url}`,
     };
   }
 
