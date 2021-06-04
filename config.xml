@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.foxdebug.wallpaper" android-versionCode="1" version="1.0.1"
+<widget id="com.foxdebug.wallpaper" android-versionCode="4" version="1.0.1"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
@@ -20,9 +20,8 @@
     <allow-intent href="geo:*" />
 
     <platform name="android">
-        <resource-file src="res/icon/android/mipmap-hdpi/ic_launcher_foreground.png" target="app/src/main/res/drawable/logo.png" />
         <resource-file src="res/icon/android/values/ic_launcher_background.xml" target="/app/src/main/res/values/colors.xml" />
-        <resource-file src="/res/network_security_config.xml" target="/app/src/main/res/xml/network_security_config.xml" />
+        <resource-file src="res/network_security_config.xml" target="/app/src/main/res/xml/network_security_config.xml" />
 
         <allow-intent href="market:*" />
         <preference name="fullscreen" value="false"/>
@@ -35,6 +34,7 @@
         <preference name="prerendered-icon" value="false" />
         <preference name="orientation" value="portrait" />
         <preference name="AndroidXEnabled" value="true" />
+        <preference name="AndroidLaunchMode" value="singleTask" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -42,6 +42,7 @@
 
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:networkSecurityConfig="@xml/network_security_config" />
+            <application android:hardwareAccelerated="true" />
         </edit-config>
 
         <icon background="@color/ic_launcher_background" density="mdpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />

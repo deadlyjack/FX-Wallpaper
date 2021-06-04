@@ -55,7 +55,7 @@ export default function Loader(strokeColor = '#39f') {
   let start = 0;
   let endSpeed = 0.03;
   let startSpeed = 0.003;
-  let textVisible = true;
+  let textVisible = false;
   let destroyed = false;
 
   ctx.strokeStyle = strokeColor;
@@ -150,7 +150,7 @@ export default function Loader(strokeColor = '#39f') {
      *
      * @param {Boolean} val
      */
-    percentageTextVisible(val) {
+    showValue(val) {
       if (val) {
         textVisible = true;
         if (!$percentageText.isConnected) app.append($percentageText);
@@ -161,10 +161,7 @@ export default function Loader(strokeColor = '#39f') {
 
       return this;
     },
-    get messageText() {
-      return $messageText.textContent;
-    },
-    set messageText(text) {
+    message(text) {
       $messageText.textContent = text;
     },
   };

@@ -10,6 +10,10 @@ import Loader from '../../components/loader';
 import downloaded from '../../lib/downloaded';
 import DownloadImage from './downloadImage';
 import helpers from '../../utils/helpers';
+import strings from '../../strings';
+import path from '../../utils/path';
+import fs from '../../utils/fs';
+import url from '../../utils/url';
 
 /**
  *
@@ -23,7 +27,7 @@ export default async function CropAndAdjustInclude(image) {
     id: 'l4wl0xol',
     secondary: true,
   });
-  const downloadImage = DownloadImage(image);
+  const loadedImage = DownloadImage(image);
   const screenHeight = window.screen.height;
   const screenWidth = window.screen.width;
   const height = window.innerHeight * 0.7;
@@ -45,13 +49,18 @@ export default async function CropAndAdjustInclude(image) {
   const $img = $pinchZoom.get('img');
   const $device = $page.get('.device');
   const $button = $page.get('button');
+  const $saveImage = $page.get('[action="save-image"]');
 
-  $button.addEventListener('click', handleOnclick);
+  if (!/(home|lock)( & lock)? screen/i.test(image.title)) {
+    $saveImage.remove();
+  }
+
+  $page.addEventListener('click', handleOnclick);
   $pinchZoom.addEventListener('change', handlePinchZoom);
   $page.onhide = () => {
     $button.removeEventListener('click', handleOnclick);
     $pinchZoom.removeEventListener('change', handlePinchZoom);
-    downloadImage.abort();
+    loadedImage.abort();
     loader.destroy();
   };
 
@@ -60,13 +69,16 @@ export default async function CropAndAdjustInclude(image) {
   if (image.src.thumbnail) {
     $img.src = image.src.thumbnail;
   }
-  const downloadedImage = downloaded.has(image);
-  if (downloadedImage) {
+  const savedImage = downloaded.has(image);
+  if (savedImage) {
     await helpers.wait(300);
-    $img.src = downloadedImage.localUri;
+    image.localUri = savedImage.localUri;
+    $img.src = savedImage.localUri;
   } else {
-    loader.show();
-    downloadImage.onprogress = (progress) => {
+    loader
+      .showValue(true)
+      .show();
+    loadedImage.onprogress = (progress) => {
       if (progress === 100) {
         loader.hide();
         return;
@@ -78,10 +90,76 @@ export default async function CropAndAdjustInclude(image) {
 
       loader.progress(progress);
     };
-    $img.src = await downloadImage.getLocalUri();
+    $img.src = await loadedImage.getLocalUri();
   }
 
-  async function handleOnclick() {
+  /**
+   *
+   * @param {MouseEvent} e
+   */
+  function handleOnclick(e) {
+    const $target = e.target;
+    if ($target instanceof HTMLElement) {
+      const action = $target.getAttribute('action');
+      if (!action) return;
+
+      switch (action) {
+        case 'set-wallpaper':
+          setWallpaper();
+          break;
+        case 'save-image':
+          saveImage();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  async function saveImage() {
+    if (hasStoragePermission) {
+      loader
+        .showValue(false)
+        .show()
+        .animate()
+        .message(`${strings.saving}...`);
+      const { name } = loadedImage;
+      const destination = url.join(cordova.file.externalRootDirectory, 'pictures');
+      const parsed = path.parse(name);
+      let newFileName = url.join(destination, name);
+      let count = 1;
+
+      if (!await fs.exists(destination)) {
+        await fs.createDir(destination);
+      }
+
+      await (async function findNewName() {
+        if (await fs.exists(newFileName)) {
+          const newName = `${parsed.name}_${count++}${parsed.ext}`;
+          newFileName = url.join(destination, newName);
+          findNewName();
+        }
+      }());
+
+      if (image.localUri) {
+        try {
+          const { data } = await fs.readFile(image.localUri);
+          await fs.writeFile(newFileName, data, true, false);
+          loader.hide();
+          alert(strings.INFO, strings.imageSaved);
+        } catch (error) {
+          loader.hide();
+          alert(strings.ERROR, helpers.getErrorMessage(error));
+        }
+      }
+
+      return;
+    }
+
+    alert(strings.INFO, strings.permissionRequired);
+  }
+
+  async function setWallpaper() {
     const API = await new Promise((resolve, reject) => {
       window.wallpaper.getAPILevel(resolve, reject);
     });
@@ -89,9 +167,9 @@ export default async function CropAndAdjustInclude(image) {
     try {
       if (API >= 24) {
         const which = await askWhich();
-        await setWallpaper(which);
+        await setWallpaperFor(which);
       } else {
-        await setWallpaper('HOME');
+        await setWallpaperFor('HOME');
       }
     } catch (error) {
       console.log(error);
@@ -100,7 +178,7 @@ export default async function CropAndAdjustInclude(image) {
 
   function askWhich() {
     return new Promise((resolve) => {
-      const box = Box('Set wallpaper as', options, 'center', true);
+      const box = Box(strings.setAs, options, 'center', true);
       box.render();
       box.$mask.onclick = box.hide;
       box.$body.onclick = (e) => {
@@ -115,12 +193,12 @@ export default async function CropAndAdjustInclude(image) {
     });
   }
 
-  async function setWallpaper(which) {
+  async function setWallpaperFor(which) {
     loader
+      .showValue(false)
       .show()
-      .percentageTextVisible(false)
       .animate()
-      .messageText = 'Setting wallpaper...';
+      .message(`${strings.settingWallpaper}...`);
 
     try {
       const contentUri = await new Promise((resolve, reject) => {
@@ -146,8 +224,8 @@ export default async function CropAndAdjustInclude(image) {
       window.wallpaper.setWallpaper(which, contentUri, rect, onSetWallpaper, (err) => {
         loader
           .hide()
-          .messageText = '';
-        alert('ERROR', err);
+          .message('');
+        alert(strings.ERROR, err);
       });
     } catch (error) {
       loader.hide();
@@ -158,7 +236,7 @@ export default async function CropAndAdjustInclude(image) {
   function onSetWallpaper(res) {
     if (res) {
       loader.hide();
-      alert('INFO', 'Wallpaper changed successfuly!');
+      alert(strings.INFO, strings.wallpaperChanged);
       document.dispatchEvent(new CustomEvent('wallpaperchange'));
     }
   }

@@ -1,1 +1,1 @@
-{"plugins":["cordova-plugin-statusbar","cordova-plugin-android-permissions","cordova-plugin-navigationbar-color","cordova-plugin-file","cordova-custom-config","cordova-plugin-whitelist","cordova-plugin-system","cordova-plugin-wallpaper","admob-plus-cordova"]}
+{"plugins":["cordova-plugin-statusbar","cordova-plugin-android-permissions","cordova-plugin-navigationbar-color","cordova-plugin-file","cordova-custom-config","cordova-plugin-whitelist","cordova-plugin-system","cordova-plugin-wallpaper","admob-plus-cordova","cordova-plugin-purchase"]}

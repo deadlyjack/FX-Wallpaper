@@ -1,5 +1,5 @@
 // import tag from 'html-tag-js';
-import colors from '../static/colors.json';
+import colors from '../colors';
 import Collection from '../pages/collection/collection';
 
 /**

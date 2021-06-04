@@ -27,6 +27,7 @@
         "IS_ANDROID": "readonly",
         "IS_ELECTRON": "readonly",
         "admob": "readonly",
-        "ad": "readonly"
+        "ad": "readonly",
+        "hasStoragePermission": "readonly"
     }
 }

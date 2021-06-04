@@ -6,6 +6,7 @@ import Page from '../../components/page/page';
 import favorite from '../../lib/favorite';
 import Loader from '../../components/loader';
 import CropAndAdjust from '../cropAndAdjust/cropAndAdjust';
+import strings from '../../strings';
 
 /**
  *
@@ -32,9 +33,9 @@ export default function CollectionInclude(name, nextPage, onhide) {
 
   loader
     .show()
-    .percentageTextVisible(false)
+    .showValue(false)
     .animate()
-    .messageText = 'Loading...';
+    .message(`${strings.loading}...`);
 
   nextPage().then((images) => {
     const $container = parsePage(images);

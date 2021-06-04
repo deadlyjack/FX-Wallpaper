@@ -1,13 +1,5 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs"
-  },
-  "Include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules/**/*",
-    "www/**/*"
-  ]
+  "compilerOptions": {},
+  "Include": [],
+  "exclude": []
 }

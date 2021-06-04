@@ -7,6 +7,18 @@
     display: none;
   }
 
+  [action='save-image'] {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
+    border-radius: 4px;
+    margin: 0 16px;
+  }
+
   .page-body {
     height: 100%;
     position: relative;

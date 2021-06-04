@@ -16,6 +16,24 @@ import Loader from './components/loader';
 function main() {
   const PLATFORM = cordova.platformId;
   const pages = [];
+  window.ad = {
+    show() {},
+    hide() {},
+  };
+
+  (async () => {
+    localStorage.AdStarted = await admob.start();
+    await admob.BannerAd.config({
+      backgroundColor: '#212028',
+    });
+    window.ad = new admob.BannerAd({
+      adUnitId: 'ca-app-pub-5911839694379275/1467676836', // PRODUCTION
+      // adUnitId: 'ca-app-pub-3940256099942544/6300978111', // TESTING
+      position: 'bottom',
+    });
+
+    ad.show();
+  })();
 
   window.ajax = ajax;
   window.loader = Loader('#39f');
@@ -26,6 +44,10 @@ function main() {
     PLATFORM: value(PLATFORM),
     IS_ANDROID: value(PLATFORM === 'android'),
     IS_ELECTRON: value(PLATFORM === 'electron'),
+    hasStoragePermission: {
+      value: false,
+      writable: true,
+    },
   });
 
   tag.get('#app').setAttribute('platform', cordova.platformId);

@@ -1,9 +1,11 @@
 import ajax from '@deadlyjack/ajax';
 
 export default function Api(pageSize = 10) {
+  // const apiUrl = 'http://192.168.0.156:3256';
+  const apiUrl = 'https://wallpaper.foxdebug.com';
   function requestObj(url) {
     return {
-      url: `https://wallpaper.foxdebug.com/${url}`,
+      url: `${apiUrl}/${url}`,
     };
   }
 

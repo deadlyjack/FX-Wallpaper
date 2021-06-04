@@ -1,5 +1,6 @@
 import ajax from '@deadlyjack/ajax';
 import downloaded from '../../lib/downloaded';
+import fs from '../../utils/fs';
 import helpers from '../../utils/helpers';
 
 /**
@@ -7,11 +8,22 @@ import helpers from '../../utils/helpers';
  * @param {Image} image
  */
 export default function DownloadImage(image) {
+  const filename = `${image.id}.jpeg`;
   let onProgress;
   let xhr;
   let aborted;
+  let imageData;
 
   return {
+    /**
+     * @type {ArrayBuffer}
+     */
+    get imageData() {
+      return imageData;
+    },
+    get name() {
+      return filename;
+    },
     get onprogress() {
       return onProgress;
     },
@@ -21,10 +33,9 @@ export default function DownloadImage(image) {
     async getLocalUri() {
       const downloadedImage = downloaded.has(image);
       if (!downloadedImage) {
-        const filename = `${image.id}.jpeg`;
-        const imageDir = cordova.file.dataDirectory;
+        const imageDir = cordova.file.externalDataDirectory;
         const imageLocalUri = imageDir + filename;
-        const imageData = await ajax({
+        const data = await ajax({
           url: image.src.original,
           responseType: 'arraybuffer',
           xhr: (xhrObj) => {
@@ -41,22 +52,13 @@ export default function DownloadImage(image) {
           },
         }); // END: ajax call
 
-        if (aborted || !imageData) {
+        if (aborted || !data) {
           helpers.call(onProgress, 100);
           return null;
         }
 
-        await new Promise((resolve, reject) => {
-          window.resolveLocalFileSystemURL(imageDir, (dirEntry) => {
-            dirEntry.getFile(filename, { create: true, exclusive: false }, (fileEntry) => {
-              fileEntry.createWriter((file) => {
-                file.onwriteend = resolve;
-                file.onerror = reject;
-                file.write(imageData);
-              });
-            }, reject);
-          }, reject);
-        }); // END: Promise
+        imageData = data;
+        await fs.writeFile(imageLocalUri, data, true, false);
 
         helpers.call(onProgress, 100);
         image.localUri = imageLocalUri;

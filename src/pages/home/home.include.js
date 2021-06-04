@@ -7,13 +7,15 @@ import Api from '../../lib/api';
 import Page from '../../components/page/page';
 import Collection from '../collection/collection';
 import favorite from '../../lib/favorite';
-import strings from './strings.json';
+import strings from '../../strings';
 import CropAndAdjust from '../cropAndAdjust/cropAndAdjust';
 import Settings from '../settings/settings';
 import GeneratedImage from '../../lib/generatedImage';
 
 const MY_LIKES = 'my likes';
 const SOLID_COLORS = 'solid colors';
+const MY_GALLARY = 'my gallary';
+const EXPLORE = 'explore';
 
 export default function HomeInclude() {
   const PER_PAGE = 25;
@@ -33,7 +35,7 @@ export default function HomeInclude() {
   const permissionToRequest = permissions.READ_EXTERNAL_STORAGE;
   let message;
   let lastSearch;
-  const tags = ['all'];
+  const tags = [MY_GALLARY];
 
   if (favorite.retrive().length > 0) {
     tags.push(MY_LIKES);
@@ -43,6 +45,7 @@ export default function HomeInclude() {
     tags.push(SOLID_COLORS);
   }
 
+  tags.push(EXPLORE);
   $pageBody.style.width = `${Math.min(innerWidth, MAX_WIDTH)}px`;
   $header.innerHTML = header;
   const $searchInput = $header.get('[type=search]');
@@ -68,6 +71,7 @@ export default function HomeInclude() {
 
   permissions.checkPermission(permissionToRequest, ({ hasPermission }) => {
     if (hasPermission) {
+      window.hasStoragePermission = true;
       addSystemWallpaper()
         .then(render)
         .finally(makeAppReady);
@@ -203,6 +207,7 @@ export default function HomeInclude() {
           permissionToRequest,
           ({ hasPermission: gotPermission }) => {
             if (gotPermission) {
+              window.hasStoragePermission = true;
               message = null;
               addSystemWallpaper().then(render);
             }
@@ -301,7 +306,7 @@ function openWallpaper(id, original, thumbnail) {
 function openTag(wallpaperTag, api) {
   const { PER_PAGE } = api;
   if (wallpaperTag === MY_LIKES) {
-    Collection(MY_LIKES, (() => {
+    Collection(MY_LIKES.capitalize(), (() => {
       let pageCount = 0;
       return (async () => {
         const start = (pageCount++) * PER_PAGE;
@@ -311,14 +316,31 @@ function openTag(wallpaperTag, api) {
     return;
   }
 
-  if (wallpaperTag === 'all') {
-    Collection('All', (() => {
+  if (wallpaperTag === EXPLORE) {
+    Collection(EXPLORE.capitalize(), (() => {
       let pageCount = 0;
       return (async () => {
         const result = await api.all(++pageCount);
         return result;
       });
     })());
+    return;
+  }
+
+  if (wallpaperTag === MY_GALLARY) {
+    window.sdcard.openDocumentFile((res) => {
+      CropAndAdjust({
+        title: res.filename,
+        get id() {
+          return this.title;
+        },
+        src: {
+          original: res.uri,
+        },
+      });
+    }, (err) => {
+      console.error(err);
+    }, 'image/*');
     return;
   }
 

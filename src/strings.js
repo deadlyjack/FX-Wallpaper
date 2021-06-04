@@ -1,0 +1,15 @@
+export default {
+  errorMessage: "Cannot display current wallpaper without access to your device's storage. Click here to grant access.",
+  search: 'Search',
+  info: 'info',
+  INFO: 'INFO',
+  error: 'error',
+  ERROR: 'ERROR',
+  permissionRequired: 'This feature requires permission to read sotrage. Please grant permission from settings.',
+  imageSaved: 'Image saved to gallary.',
+  saving: 'Saving',
+  loading: 'Loading',
+  settingWallpaper: 'Setting wallpaper',
+  wallpaperChanged: 'Wallpaper changed successfuly!',
+  setAs: 'Set wallpaper as',
+};

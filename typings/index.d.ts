@@ -169,6 +169,27 @@ interface Image{
   meta: ImageMeta;
 }
 
+interface FileStatus {
+  canRead: boolean;
+  canWrite: boolean;
+  exists: boolean; //indicates if file can be found on device storage
+  isDirectory: boolean;
+  isFile: boolean;
+  isVirtual: boolean;
+  lastModified: number;
+  length: number;
+  name: string;
+  type: string;
+  uri: string;
+}
+
+interface PathObject {
+  dir: string;
+  root: string;
+  base: string;
+  name: string;
+  ext: string;
+}
 
 declare const app: HTMLDivElement;
 declare const actionStack: ActionStack;
@@ -177,3 +198,4 @@ declare const IS_ANDROID: Boolean;
 declare const IS_ELECTRON: Boolean;
 declare const PLATFORM: "android" | "electron" | "browser";
 declare const ad: Ad;
+declare const hasStoragePermission: boolean;
