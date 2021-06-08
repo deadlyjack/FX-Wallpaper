@@ -11,6 +11,7 @@ import strings from '../../strings';
 import CropAndAdjust from '../cropAndAdjust/cropAndAdjust';
 import Settings from '../settings/settings';
 import GeneratedImage from '../../lib/generatedImage';
+import helpers from '../../utils/helpers';
 
 const MY_LIKES = 'my likes';
 const SOLID_COLORS = 'solid colors';
@@ -328,14 +329,14 @@ function openTag(wallpaperTag, api) {
   }
 
   if (wallpaperTag === MY_GALLARY) {
-    window.sdcard.openDocumentFile((res) => {
+    window.sdcard.getImage((res) => {
       CropAndAdjust({
-        title: res.filename,
+        title: helpers.uuid(),
         get id() {
           return this.title;
         },
         src: {
-          original: res.uri,
+          original: res,
         },
       });
     }, (err) => {
