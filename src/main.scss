@@ -28,6 +28,7 @@ body {
 }
 
 [action] {
+  pointer-events: all !important;
   transition: all 100ms ease;
 
   * {

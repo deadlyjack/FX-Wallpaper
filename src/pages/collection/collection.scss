@@ -71,7 +71,12 @@
         }
 
         .icon-favorite {
+          background-color: transparent;
           transition: all 100ms ease;
+
+          &:active {
+            background-color: transparent;
+          }
 
           &.fill-red {
             color: orangered;

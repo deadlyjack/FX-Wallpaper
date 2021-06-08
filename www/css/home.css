@@ -310,8 +310,11 @@
           color: #92b8dd;
           text-decoration: none; }
         #ldxpq13x .page-body .img .bottom-bar .icon-favorite {
+          background-color: transparent;
           -webkit-transition: all 100ms ease;
           transition: all 100ms ease; }
+          #ldxpq13x .page-body .img .bottom-bar .icon-favorite:active {
+            background-color: transparent; }
           #ldxpq13x .page-body .img .bottom-bar .icon-favorite.fill-red {
             color: orangered; }
           #ldxpq13x .page-body .img .bottom-bar .icon-favorite.pop {

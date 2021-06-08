@@ -4558,6 +4558,7 @@ body {
   font-size: 1.5rem; }
 
 [action] {
+  pointer-events: all !important;
   -webkit-transition: all 100ms ease;
   transition: all 100ms ease; }
   [action] * {
