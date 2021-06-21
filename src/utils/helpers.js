@@ -1,3 +1,5 @@
+import tag from 'html-tag-js';
+
 export default {
   /**
    * Returns unique ID
@@ -72,5 +74,14 @@ export default {
     }
 
     return rgb;
+  },
+  openlink(href) {
+    const $a = tag('a', {
+      href,
+    });
+
+    document.body.append($a);
+    $a.click();
+    $a.remove();
   },
 };

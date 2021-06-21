@@ -20,6 +20,7 @@
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <uses-permission android:name="android.permission.SET_WALLPAPER" />
       <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
+      <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     </config-file>
 
     <source-file src="src/android/Wallpaper.java" target-dir="src/com/foxdebug/wallpaper"/>

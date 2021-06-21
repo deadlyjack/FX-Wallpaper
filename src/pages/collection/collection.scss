@@ -2,6 +2,7 @@
 
 #ldxpq13x {
   position: relative;
+  font-size: 0.8rem;
 
   .page-body {
     position: relative;
@@ -70,13 +71,29 @@
           text-decoration: none;
         }
 
-        .icon-favorite {
+        [action] {
           background-color: transparent;
-          transition: all 100ms ease;
+
+          &[data-href] {
+            &:active {
+              color: #39f;
+            }
+          }
 
           &:active {
             background-color: transparent;
           }
+        }
+
+        [data-href]:not(:empty) {
+          background-color: white;
+          border-radius: 4px;
+          color: rgb(43, 68, 94);
+          padding: 2.5px 5px;
+        }
+
+        .icon-favorite {
+          transition: all 100ms ease;
 
           &.fill-red {
             color: orangered;

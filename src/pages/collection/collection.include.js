@@ -7,6 +7,7 @@ import favorite from '../../lib/favorite';
 import Loader from '../../components/loader';
 import CropAndAdjust from '../cropAndAdjust/cropAndAdjust';
 import strings from '../../strings';
+import helpers from '../../utils/helpers';
 
 /**
  *
@@ -120,6 +121,10 @@ export default function CollectionInclude(name, nextPage, onhide) {
     switch (aciton) {
       case 'set-wallpaper':
         CropAndAdjust(getImageData($target));
+        break;
+
+      case 'open-link':
+        helpers.openlink($target.getAttribute('data-href'));
         break;
 
       case 'favorite':

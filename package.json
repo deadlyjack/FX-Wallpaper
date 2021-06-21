@@ -33,7 +33,6 @@
         "cordova-plugin-android-permissions": "^1.1.2",
         "cordova-plugin-file": "^6.0.2",
         "cordova-plugin-navigationbar-color": "^0.1.0",
-        "cordova-plugin-purchase": "^10.5.3",
         "cordova-plugin-sdcard": "^1.0.4",
         "cordova-plugin-system": "^1.0.1",
         "cordova-plugin-wallpaper": "file:src/plugins/cordova-plugin-wallpaper",
@@ -85,9 +84,6 @@
             "admob-plus-cordova": {
                 "APP_ID_ANDROID": "ca-app-pub-5911839694379275~4285411860",
                 "PLAY_SERVICES_VERSION": "20.1.0"
-            },
-            "cordova-plugin-purchase": {
-                "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkBBwhj4IpuNx9qhCWPEU/ygSIqsaTTyfZ2j5VPDqW98wDPRDz7rgRep5Ai/5zTFWABPsRb46szcATcAQvYqYVfYNQ6qDY1lemGQKc8sSAsVNYUIJlJZfYD12cmRNylHYET9rz40unewL6k4JzkKgAHgOXPTG22KAfe4YjzGejzdIbhVHvTMz2MQp23crlNcsdhthnlJYQyJ9V1hyh2H+McTuVjf//K3yTmQTX8fdULjxGyWTE7wHFQ2dyNa7gTKw+fFishQsg/W5kDJuCb+FAblFbODfzCcMvo+H8vtTRnT2eRbUu0WFPhqZX1sxd2pOmxkNLHMDFjEopTg4f7Y53wIDAQAB"
             },
             "cordova-plugin-sdcard": {}
         },
