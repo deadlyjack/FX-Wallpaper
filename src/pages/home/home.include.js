@@ -19,6 +19,7 @@ const MY_GALLARY = 'my gallary';
 const EXPLORE = 'explore';
 
 export default function HomeInclude() {
+  const READ_EXTERNAL_STORAGE = 'android.permission.READ_EXTERNAL_STORAGE';
   const PER_PAGE = 25;
   const MAX_WIDTH = 600;
   const $page = Page('Home', {
@@ -32,8 +33,6 @@ export default function HomeInclude() {
   const width = ((Math.min(innerWidth, MAX_WIDTH)) / 2) - 15;
   const height = width * 2;
   const collections = [];
-  const { permissions } = cordova.plugins;
-  const permissionToRequest = permissions.READ_EXTERNAL_STORAGE;
   let message;
   let lastSearch;
   const tags = [MY_GALLARY];
@@ -46,6 +45,7 @@ export default function HomeInclude() {
     tags.push(SOLID_COLORS);
   }
 
+  $pageBody.classList.add('scrollable');
   tags.push(EXPLORE);
   $pageBody.style.width = `${Math.min(innerWidth, MAX_WIDTH)}px`;
   $header.innerHTML = header;
@@ -70,8 +70,8 @@ export default function HomeInclude() {
       console.log(err);
     });
 
-  permissions.checkPermission(permissionToRequest, ({ hasPermission }) => {
-    if (hasPermission) {
+  window.system.hasPermission(READ_EXTERNAL_STORAGE, (res) => {
+    if (res) {
       window.hasStoragePermission = true;
       addSystemWallpaper()
         .then(render)
@@ -106,6 +106,7 @@ export default function HomeInclude() {
       app.classList.add('ready');
       setTimeout(() => {
         app.classList.remove('ready', 'not-ready');
+        ad.show();
       }, 1000);
     }, 500);
   }
@@ -157,6 +158,7 @@ export default function HomeInclude() {
       get hidden() {
         return !this.src;
       },
+      src: '',
     };
 
     if (typeof src === 'function') {
@@ -204,10 +206,10 @@ export default function HomeInclude() {
         break;
 
       case 'grant-access':
-        permissions.requestPermission(
-          permissionToRequest,
-          ({ hasPermission: gotPermission }) => {
-            if (gotPermission) {
+        window.system.requestPermission(
+          READ_EXTERNAL_STORAGE,
+          (res) => {
+            if (res) {
               window.hasStoragePermission = true;
               message = null;
               addSystemWallpaper().then(render);

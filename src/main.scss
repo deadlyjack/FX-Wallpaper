@@ -56,44 +56,29 @@ body {
       left: 0;
       background-color: #212028;
       background-color: var(--primary-color);
-      content: 'by';
-      color: #ccc;
+      content: '';
       height: 100vh;
       width: 100vw;
       background-image: url(./res/logo.png), url(./res/foxdebug.png);
       background-position: center, bottom 20px center;
-      background-size: 150px, 100px;
+      background-size: 150px, 80px;
       background-repeat: no-repeat, no-repeat;
-      text-align: center;
-      box-sizing: border-box;
-      padding-top: 188%;
-
-      animation: show-text 300ms ease 1;
-
-      @keyframes show-text {
-        from {
-          color: transparent;
-        }
-        to {
-          color: #ccc;
-        }
-      }
     }
   }
 
   &.ready {
     &::after {
-      transform: scale(2);
       opacity: 0;
+      transform: scale(2);
       animation: hide-loading 1s ease 1;
       @keyframes hide-loading {
-        to {
-          transform: scale(2);
-          opacity: 0;
-        }
         from {
           transform: scale(1);
           opacity: 1;
+        }
+        to {
+          transform: scale(2);
+          opacity: 0;
         }
       }
     }

@@ -1,11 +1,12 @@
-/* eslint-disable no-console */
+/* eslint-disable prefer-const */
 /* eslint-disable no-restricted-syntax */
 const path = require('path');
 const fs = require('fs');
 
-const buildFilePath = path.resolve(__dirname, '../build.json');
-const copytToPath = path.resolve(__dirname, '../platforms/android/build.json');
-const resPath = path.resolve(__dirname, '../platforms/android/app/src/main/res/');
+const resPath = path.resolve(
+  __dirname,
+  '../platforms/android/app/src/main/res/',
+);
 
 const splashScreens = [
   'drawable-land-hdpi',
@@ -22,12 +23,7 @@ const splashScreens = [
   'drawable-port-xxxhdpi',
 ];
 
-if (
-  !fs.existsSync(copytToPath)
-  && fs.existsSync(buildFilePath)
-) fs.copyFileSync(buildFilePath, copytToPath);
-
-for (const splashScreen of splashScreens) {
+for (let splashScreen of splashScreens) {
   const file = path.join(resPath, splashScreen);
   if (fs.existsSync(file)) {
     fs.rmdirSync(file, {

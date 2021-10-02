@@ -23,4 +23,5 @@ if (babelrc) {
   babelrc = JSON.stringify(babelrc, undefined, 2);
   fs.writeFileSync(babelrcpath, babelrc, 'utf8');
 }
+console.log('-- Configuration done --');
 process.exit(0);

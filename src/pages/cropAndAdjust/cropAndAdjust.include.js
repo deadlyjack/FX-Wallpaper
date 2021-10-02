@@ -6,7 +6,7 @@ import page from './cropAndAdjust.hbs';
 import Page from '../../components/page/page';
 import alert from '../../components/dialogs/alert/alert';
 import Box from '../../components/dialogs/box/box';
-import Loader from '../../components/loader';
+import ProgressBar from '../../components/progress';
 import downloaded from '../../lib/downloaded';
 import DownloadImage from './downloadImage';
 import helpers from '../../utils/helpers';
@@ -32,7 +32,7 @@ export default async function CropAndAdjustInclude(image) {
   const screenWidth = window.screen.width;
   const height = window.innerHeight * 0.7;
   const width = height * (screenWidth / screenHeight);
-  const loader = Loader('#39f');
+  const loader = ProgressBar('#39f');
   const MIN_SCALE = 1;
   const MAX_SCALE = 4;
   let oldX = 0;
@@ -64,6 +64,7 @@ export default async function CropAndAdjustInclude(image) {
     loader.destroy();
   };
 
+  // Wait for page to finish popup animation
   await helpers.wait(300);
 
   if (image.src.thumbnail) {
@@ -75,9 +76,7 @@ export default async function CropAndAdjustInclude(image) {
     image.localUri = savedImage.localUri;
     $img.src = savedImage.localUri;
   } else {
-    loader
-      .showValue(true)
-      .show();
+    loader.showValue(true).show();
     loadedImage.onprogress = (progress) => {
       if (progress === 100) {
         loader.hide();
@@ -118,18 +117,17 @@ export default async function CropAndAdjustInclude(image) {
 
   async function saveImage() {
     if (hasStoragePermission) {
-      loader
-        .showValue(false)
-        .show()
-        .animate()
-        .message(`${strings.saving}...`);
+      loader.showValue(false).show().animate().message(`${strings.saving}...`);
       const { name } = loadedImage;
-      const destination = url.join(cordova.file.externalRootDirectory, 'pictures');
+      const destination = url.join(
+        cordova.file.externalRootDirectory,
+        'pictures',
+      );
       const parsed = path.parse(name);
       let newFileName = url.join(destination, name);
       let count = 1;
 
-      if (!await fs.exists(destination)) {
+      if (!(await fs.exists(destination))) {
         await fs.createDir(destination);
       }
 
@@ -201,19 +199,9 @@ export default async function CropAndAdjustInclude(image) {
       .message(`${strings.settingWallpaper}...`);
 
     try {
-      const contentUri = await new Promise((resolve, reject) => {
-        window.system.convertUriToContentSchema($img.src, (res) => {
-          console.log(res);
-          resolve(res);
-        }, (err) => {
-          console.error(err);
-          reject(err);
-        });
-      });
-
       const { scale } = $pinchZoom;
-      const scaledImageWidth = ($img.clientWidth * scale);
-      const scaledImageHeight = ($img.clientHeight * scale);
+      const scaledImageWidth = $img.clientWidth * scale;
+      const scaledImageHeight = $img.clientHeight * scale;
       const rect = {
         x: Math.abs($pinchZoom.x / scaledImageWidth),
         y: Math.abs($pinchZoom.y / scaledImageHeight),
@@ -221,12 +209,16 @@ export default async function CropAndAdjustInclude(image) {
         w: $device.clientWidth / scaledImageWidth,
         s: scale,
       };
-      window.wallpaper.setWallpaper(which, contentUri, rect, onSetWallpaper, (err) => {
-        loader
-          .hide()
-          .message('');
-        alert(strings.ERROR, err);
-      });
+      window.wallpaper.setWallpaper(
+        which,
+        $img.src,
+        rect,
+        onSetWallpaper,
+        (err) => {
+          loader.hide().message('');
+          alert(strings.ERROR, err);
+        },
+      );
     } catch (error) {
       loader.hide();
       console.error(error);
@@ -246,7 +238,11 @@ export default async function CropAndAdjustInclude(image) {
 
     const y = (scaleY) => {
       const newY = $pinchZoom.y;
-      const newHeight = -((($img.clientHeight * scaleY) + 4) - $pinchZoom.clientHeight);
+      const newHeight = -(
+        $img.clientHeight * scaleY
+        + 4
+        - $pinchZoom.clientHeight
+      );
 
       if (newY > 0) return 0;
       if (newY < newHeight) return newHeight;
@@ -255,7 +251,7 @@ export default async function CropAndAdjustInclude(image) {
 
     const x = (scaleX) => {
       const newX = $pinchZoom.x;
-      const newWidth = -(($img.clientWidth * scaleX) - $pinchZoom.clientWidth);
+      const newWidth = -($img.clientWidth * scaleX - $pinchZoom.clientWidth);
 
       // console.log({ newX, newWidth });
       if (newX > 0) return 0;

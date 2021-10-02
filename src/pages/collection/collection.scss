@@ -31,24 +31,6 @@
       background-size: cover;
       background-repeat: no-repeat;
 
-      // &::after,
-      // &::before {
-      //   position: absolute;
-      //   top: 0;
-      //   background-color: black;
-      //   color: white;
-      //   padding: 2.5px 5px;
-      // }
-
-      // &::after {
-      //   left: 0;
-      //   content: attr(page);
-      // }
-      // &::before {
-      //   right: 0;
-      //   content: attr(count);
-      // }
-
       .bottom-bar {
         position: absolute;
         bottom: 0;
@@ -66,11 +48,6 @@
         padding: 20px 10px 0 10px;
         box-sizing: border-box;
 
-        a {
-          color: rgb(146, 184, 221);
-          text-decoration: none;
-        }
-
         [action] {
           background-color: transparent;
 
@@ -85,7 +62,18 @@
           }
         }
 
+        .author {
+          display: flex;
+          align-items: center;
+          max-width: calc(100% - 60px);
+        }
+
         [data-href]:not(:empty) {
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
           background-color: white;
           border-radius: 4px;
           color: rgb(43, 68, 94);

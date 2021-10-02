@@ -191,11 +191,11 @@ interface PathObject {
   ext: string;
 }
 
-declare const app: HTMLDivElement;
-declare const actionStack: ActionStack;
-declare const ROOT: String;
-declare const IS_ANDROID: Boolean;
-declare const IS_ELECTRON: Boolean;
-declare const PLATFORM: "android" | "electron" | "browser";
-declare const ad: Ad;
-declare const hasStoragePermission: boolean;
+declare var app: HTMLDivElement;
+declare var actionStack: ActionStack;
+declare var ROOT: String;
+declare var IS_ANDROID: Boolean;
+declare var IS_ELECTRON: Boolean;
+declare var PLATFORM: "android" | "electron" | "browser";
+declare var ad: Ad;
+declare var hasStoragePermission: boolean;

@@ -4,7 +4,7 @@ import tag from 'html-tag-js';
  *
  * @param {String} strokeColor
  */
-export default function Loader(strokeColor = '#39f') {
+export default function ProgressBar(strokeColor = '#39f') {
   const pixelRatio = window.devicePixelRatio;
   const lineWidth = 5 * pixelRatio;
   const HEIGHT = Math.min(Math.min(window.innerWidth * 0.2, 80), 150);
@@ -91,7 +91,7 @@ export default function Loader(strokeColor = '#39f') {
     const r = (WIDTH * pixelRatio) / 2;
     ctx.clearRect(0, 0, $canvas.width, $canvas.width);
     ctx.beginPath();
-    ctx.arc(r, r, r - lineWidth, (2 * start) * Math.PI, (2 * end) * Math.PI, false);
+    ctx.arc(r, r, r - lineWidth, 2 * start * Math.PI, 2 * end * Math.PI, false);
     ctx.stroke();
   }
 
@@ -117,7 +117,9 @@ export default function Loader(strokeColor = '#39f') {
       animatingAt = null;
       animate = false;
       end = percentage / 100;
-      if ($percentageText) $percentageText.textContent = `${percentage.toFixed(1)}%`;
+      if ($percentageText) {
+        $percentageText.textContent = `${percentage.toFixed(1)}%`;
+      }
       return this;
     },
     hide() {

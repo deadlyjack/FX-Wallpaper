@@ -4,7 +4,7 @@ import mustache from 'mustache';
 import imagePreview from './image-preview.hbs';
 import Page from '../../components/page/page';
 import favorite from '../../lib/favorite';
-import Loader from '../../components/loader';
+import ProgressBar from '../../components/progress';
 import CropAndAdjust from '../cropAndAdjust/cropAndAdjust';
 import strings from '../../strings';
 import helpers from '../../utils/helpers';
@@ -16,14 +16,14 @@ import helpers from '../../utils/helpers';
  */
 export default function CollectionInclude(name, nextPage, onhide) {
   const { innerWidth } = window;
-  const width = (Math.min(innerWidth, 800)) / 2;
+  const width = Math.min(innerWidth, 800) / 2;
   const $page = Page(name, {
     id: 'ldxpq13x',
     secondary: true,
   });
   const $pageBody = $page.get('.page-body');
   const pages = [];
-  const loader = Loader('#39f');
+  const loader = ProgressBar('#39f');
   let topRow1 = 0;
   let topRow2 = 0;
   let isLoading = false;
@@ -32,11 +32,7 @@ export default function CollectionInclude(name, nextPage, onhide) {
   let imgCounter = 0;
   let row = 1;
 
-  loader
-    .show()
-    .showValue(false)
-    .animate()
-    .message(`${strings.loading}...`);
+  loader.show().showValue(false).animate().message(`${strings.loading}...`);
 
   nextPage().then((images) => {
     const $container = parsePage(images);
@@ -81,15 +77,17 @@ export default function CollectionInclude(name, nextPage, onhide) {
       img.page = `Page: ${counter} | Row: ${row}`;
       img.count = `Image: ${++imgCounter}`;
       img.favorite = !!favorite.has(img);
-      img.relative_height = ((width / img.width) * img.height);
+      img.relative_height = (width / img.width) * img.height;
       img.relative_width = width - 7.5;
 
-      if (row === 1) { // row1
+      if (row === 1) {
+        // row1
         img.top = topRow1 + 5;
         img.left = 5;
         topRow1 += img.relative_height + 5;
         row = 2;
-      } else { // row2
+      } else {
+        // row2
         img.top = topRow2 + 5;
         img.right = 5;
         topRow2 += img.relative_height + 5;
@@ -143,23 +141,21 @@ export default function CollectionInclude(name, nextPage, onhide) {
     if (isLoading) return;
     const bottom = this.scrollHeight * 0.98;
     const oldScrollTop = this.scrollTop;
-    if (bottom <= (oldScrollTop + this.clientHeight) && shouldLoadNewPage) {
+    if (bottom <= oldScrollTop + this.clientHeight && shouldLoadNewPage) {
       isLoading = true;
-      loader
-        .show();
-      nextPage()
-        .then((images) => {
-          loader.hide();
-          isLoading = false;
-          if (!images.length) {
-            shouldLoadNewPage = false;
-            return;
-          }
-          const $container = parsePage(images);
-          $pageBody.style.height = `${$container.bottom}px`;
-          renderPage($container);
-          pages.push($container);
-        });
+      loader.show();
+      nextPage().then((images) => {
+        loader.hide();
+        isLoading = false;
+        if (!images.length) {
+          shouldLoadNewPage = false;
+          return;
+        }
+        const $container = parsePage(images);
+        $pageBody.style.height = `${$container.bottom}px`;
+        renderPage($container);
+        pages.push($container);
+      });
     }
   }
 }

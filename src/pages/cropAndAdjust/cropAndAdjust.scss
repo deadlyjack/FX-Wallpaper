@@ -3,6 +3,10 @@
 #l4wl0xol {
   position: relative;
 
+  pinch-zoom > * {
+    will-change: unset !important;
+  }
+
   header {
     display: none;
   }

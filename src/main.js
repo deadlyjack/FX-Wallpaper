@@ -6,12 +6,10 @@ import './utils/polyfill';
 import 'core-js/stable';
 import 'blueimp-canvas-to-blob';
 import tag from 'html-tag-js';
-import ajax from '@deadlyjack/ajax';
 import ActionStack from './lib/actionStack';
 import confirm from './components/dialogs/confirm/confirm';
 import config from './config';
 import Home from './pages/home/home';
-import Loader from './components/loader';
 
 function main() {
   const PLATFORM = cordova.platformId;
@@ -31,16 +29,15 @@ function main() {
       // adUnitId: 'ca-app-pub-3940256099942544/6300978111', // TESTING
       position: 'bottom',
     });
-
-    ad.show();
   })();
-
-  window.ajax = ajax;
-  window.loader = Loader('#39f');
 
   Object.defineProperties(window, {
     actionStack: value(ActionStack()),
-    ROOT: value(window.location.href.replace(/(\/index\.html)$/, '').replace(/www\/.*/, 'www')),
+    ROOT: value(
+      window.location.href
+        .replace(/(\/index\.html)$/, '')
+        .replace(/www\/.*/, 'www'),
+    ),
     PLATFORM: value(PLATFORM),
     IS_ANDROID: value(PLATFORM === 'android'),
     IS_ELECTRON: value(PLATFORM === 'electron'),
@@ -70,7 +67,6 @@ function value(val) {
 }
 
 function closeApp() {
-  if (window.beforeClose) window.beforeClose();
   navigator.app.exitApp();
 }
 
@@ -102,7 +98,9 @@ function onBackButton() {
   if (!actionStack.length) {
     if (config.confirmOnExit) {
       setTimeout(() => {
-        const closeMessage = typeof window.closeMessage === 'function' ? window.getCloseMessage() : '';
+        const closeMessage = typeof window.closeMessage === 'function'
+          ? window.getCloseMessage()
+          : '';
 
         if (closeMessage) confirm('Alert', closeMessage).then(closeApp);
         else confirm('Alert', 'Exit app?').then(closeApp);
